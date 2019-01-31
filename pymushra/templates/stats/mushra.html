@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ url }}</h1>
+
+    <p>
+        <em>Numer of participants:</em> {{ n_post }} ({{ n_pre - n_post }} outliers removed)
+    </p>
+    <img src = "{{ boxplot_uri }}"/>
+    <h2>Preconditions</h2>
+    <p>
+        <h3>Test of normality (KS):</h3>
+            {% for stimulus, p in ks.items() %}
+                <b>Condition {{ stimulus }}:</b> p = {{ p }} {{ significance_stars(p) | safe }}</br>
+            {% endfor %}
+        <h3>Test of equal variances:</h3>
+            <b>Levene test</b>: p = {{ lev_p }} {{ significance_stars(lev_p) | safe }}
+    <h2>ANOVA</h2>
+    <p>
+        <pre>{{ aov }}</pre>
+    </p>
+    <h2>Pairwise Comparison Test</h2>
+    <p>
+        <pre>{{ pair }}</pre>
+    </p>
+{% endblock %}

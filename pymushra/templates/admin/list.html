@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Results</h2>
+
+    <table class="table">
+        <tr>
+            <th>Test ID</th>
+            <th>N</th>
+            <th>Last submission</th>
+            <th class="text-right">Options</th>
+        </tr>
+        {% for collection in collections %}
+        <tr>
+            <td>
+                {{ collection.id }}
+            </td>
+            <td>
+                {{ collection.participants }}
+            </td>
+            <td>
+                {{ collection.last_submission|datetime }}
+            </td>
+            <td>
+                <a class="btn btn-sm btn-default pull-right" href="{{ url_for('admin_info', testid=collection.id) }}"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span> Info</a>
+                <a class="btn btn-sm btn-default pull-right" href="{{ url_for('admin_stats', testid=collection.id, stats_type='mushra') }}"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Statistics</a>
+                <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Download <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="{{ url_for('download', testid=collection.id, filetype="csv", show_as="download") }}">CSV</a></li>
+                        <li><a href="{{ url_for('download', testid=collection.id, filetype="pickle", show_as="download") }}">Pickle</a></li>
+                        <li><a href="{{ url_for('download', testid=collection.id, filetype="json", show_as="download") }}">JSON</a></li>
+                    </ul>
+                </div>
+                <a class="btn btn-sm btn-default pull-right" href="{{ url_for('download', testid=collection.id, filetype="html", show_as="text") }}"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Preview</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% if not collections %}
+        <tr>
+            <td>
+                No results found
+            </td>
+        </tr>
+        {% endif %}
+    </table>
+
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse_experiments" aria-expanded="false" aria-controls="collapse_experiments">Show experiments</button>
+
+    <div class="collapse" id="collapse_experiments">
+        <h2>Experiments</h2>
+
+        <table class="table">
+            {% for config in configs %}
+            <tr>
+                <td>
+                    {{ config }}
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-default pull-right" href="{{ '%s?config=%s' % (url_for('home'), config) }}"><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span> Run</a></a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% if not configs %}
+            <tr>
+                <td>
+                    No experiments found
+                </td>
+            </tr>
+            {% endif %}
+        </table>
+    </div>
+
+{% endblock %}

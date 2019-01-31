@@ -1,0 +1,2 @@
+graft pymushra/templates
+global-exclude *.pyc

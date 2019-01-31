@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>TestID: {{ testId }}</h2>
+
+    <table class="table">
+        {% for config in configs %}
+        <tr>
+            <td>
+                {{ config }}
+            </td>
+            <td>
+                <a class="btn btn-sm btn-default pull-right" href="{{ '%s?config=%s' % (url_for('home'), config) }}"><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span> Run Experiment</a></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

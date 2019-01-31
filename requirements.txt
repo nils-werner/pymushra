@@ -1,0 +1,13 @@
+numpy
+matplotlib>=2.0.0
+scipy
+ipython
+flask
+pandas
+seaborn
+statsmodels
+patsy
+tinydb
+ipdb
+pytest
+Fabric==1.10.0
