@@ -4,7 +4,7 @@ pyMUSHRA
 Description
 -----------
 
-pyMUSHRA is a python web application which hosts a web based MUSHRA experiment
+pyMUSHRA is a python web application which hosts [webMUSHRA](https://github.com/audiolabs/webMUSHRA) experiments
 and collects the data with python.
 
 Installation
