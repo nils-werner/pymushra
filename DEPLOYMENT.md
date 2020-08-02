@@ -1,11 +1,17 @@
 Deploying
 ---------
 
+### User Setup
+
+Create a `webmushra` service user
+
+    useradd --system --shell /usr/bin/nologin webmushra
+
 ### Apache
 
 Importing SciPy into a WSGI script has proven to be tricky, so you need to change the `WSGIScriptAlias` line a bit:
 
-    WSGIDaemonProcess webmushra user=user group=group python-path=/path/to/venv/pymushra:/path/to/venv/lib/python2.7/site-packages
+    WSGIDaemonProcess webmushra user=webmushra group=webmushra python-path=/path/to/venv/pymushra:/path/to/venv/lib/python2.7/site-packages
     WSGIScriptAlias /webmushra /path/to/venv/pymushra/wsgi.py process-group=webmushra application-group=%{GLOBAL}
 
     <Location /webmushra>
@@ -58,8 +64,8 @@ Create a Systemd service file `/etc/systemd/system/webmushra.service`
 
     [Service]
     ExecStart=/bin/bash -c 'cd /path/to/venv/pymushra && source ../bin/activate && uwsgi --ini uwsgi.ini'
-    User=webservices
-    Group=webservices
+    User=webmushra
+    Group=webmushra
     Restart=on-failure
     KillSignal=SIGQUIT
     Type=notify
