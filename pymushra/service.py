@@ -5,6 +5,7 @@ import json
 import pickle
 from flask import Flask, request, jsonify, send_from_directory, send_file, \
     render_template, redirect, url_for
+from tinyrecord import transaction
 
 from . import stats, casting, utils
 
@@ -37,7 +38,8 @@ def collect(testid=''):
             insert = casting.json_to_dict(payload)
 
             collection = db.table(payload['trials'][0]['testId'])
-            inserted_ids = collection.insert_multiple(insert)
+            with transaction(collection):
+                inserted_ids = collection.insert_multiple(insert)
             print(inserted_ids)
 
             return jsonify({
