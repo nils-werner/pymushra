@@ -98,7 +98,7 @@ def render_mushra(testid, df):
         groups.append(
             df_dut[df_dut[('responses_stimulus')] == stimulus][
                 ('responses_score')
-            ].as_matrix()
+            ].to_numpy()
         )
     W, lev_p = scipy.stats.levene(
         *tuple(groups)

@@ -20,7 +20,7 @@ if __name__ == "__main__":
             'scipy',
             'ipython',
             'flask',
-            'pandas',
+            'pandas>=0.24.0',
             'seaborn',
             'statsmodels',
             'patsy',
