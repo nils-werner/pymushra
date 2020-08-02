@@ -5,7 +5,7 @@ import setuptools
 if __name__ == "__main__":
     setuptools.setup(
         name='pymushra',
-        version='0.1',
+        version='0.2',
 
         description='webMUSHRA server in Python',
         author='Nils Werner, Fabian-Robert Stöter',
