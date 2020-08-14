@@ -18,11 +18,14 @@ def cli(ctx, webmushra_path, db_path):
 
 @cli.command()
 @click.option('--port', '-p', default=5000)
+@click.option('--admin-allow', '-a', default=["127.0.0.1"], multiple=True)
 @click.pass_context
-def server(ctx, port):
+def server(ctx, port, admin_allow):
     service.app.config['webmushra_dir'] = os.path.join(
         os.getcwd(), ctx.obj['webmushra_path']
     )
+
+    service.app.config['admin_allowlist'] = admin_allow
 
     with TinyDB(ctx.obj['db_path']) as service.app.config['db']:
         service.app.run(debug=True, host='0.0.0.0', port=port)

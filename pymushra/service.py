@@ -4,8 +4,9 @@ import os
 import json
 import pickle
 from flask import Flask, request, jsonify, send_from_directory, send_file, \
-    render_template, redirect, url_for
+    render_template, redirect, url_for, abort
 from tinyrecord import transaction
+from functools import wraps
 
 from . import stats, casting, utils
 
@@ -16,6 +17,15 @@ except ImportError:
     from StringIO import StringIO
 
 app = Flask(__name__)
+
+def only_admin_allowlist(f):
+    @wraps(f)
+    def wrapped(*args, **kwargs):
+        if request.remote_addr in app.config['admin_allowlist']:
+            return f(*args, **kwargs)
+        else:
+            return abort(403)
+    return wrapped
 
 
 @app.route('/')
@@ -57,6 +67,7 @@ def collect(testid=''):
 
 @app.route('/admin/')
 @app.route('/admin/list')
+@only_admin_allowlist
 def admin_list():
     db = app.config['db']
     collection_names = db.tables()
@@ -88,6 +99,7 @@ def admin_list():
 
 
 @app.route('/admin/delete/<testid>')
+@only_admin_allowlist
 def admin_delete(testid):
     collection = app.config['db'].table(testid)
     collection.drop()
@@ -96,6 +108,7 @@ def admin_delete(testid):
 
 
 @app.route('/admin/info/<testid>/')
+@only_admin_allowlist
 def admin_info(testid):
     collection = app.config['db'].table(testid)
     df = casting.collection_to_df(collection)
@@ -114,6 +127,7 @@ def admin_info(testid):
 
 
 @app.route('/admin/latest/<testid>/')
+@only_admin_allowlist
 def admin_latest(testid):
     collection = app.config['db'].table(testid)
     latest = sorted(collection.all(), key=lambda x: x['date'], reverse=True)[0]
@@ -121,6 +135,7 @@ def admin_latest(testid):
 
 
 @app.route('/admin/stats/<testid>/<stats_type>')
+@only_admin_allowlist
 def admin_stats(testid, stats_type='mushra'):
     collection = app.config['db'].table(testid)
     df = casting.collection_to_df(collection)
@@ -154,6 +169,7 @@ def admin_stats(testid, stats_type='mushra'):
 @app.route(
     '/admin/show/<testid>/<statstype>.<filetype>',
     defaults={'show_as': 'text'})
+@only_admin_allowlist
 def download(testid, show_as, statstype=None, filetype='csv'):
     allowed_types = ('csv', 'pickle', 'json', 'html')
 
