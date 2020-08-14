@@ -18,12 +18,9 @@ This tool assumes to be run in a directory with the following structure:
 
 You may create this structure using
 
-    virtualenv my_experiment
-    cd my_experiment && source bin/activate
-
     mkdir db
-    git clone git@github.com:audiolabs/webMUSHRA.git webmushra
-    git clone git@github.com:nils-werner/pymushra.git pymushra
+    git clone https://github.com/audiolabs/webMUSHRA.git webmushra
+    git clone https://github.com/nils-werner/pymushra.git pymushra
 
     pip install -e pymushra
     pymushra server
