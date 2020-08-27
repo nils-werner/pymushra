@@ -26,6 +26,8 @@ You can quickly create this and install pymushra using
     pip install -e pymushra
     pymushra server
 
+Then open <http://localhost:5000/admin/>
+
 Debugging
 ---------
 
