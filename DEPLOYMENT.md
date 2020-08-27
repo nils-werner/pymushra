@@ -11,19 +11,25 @@ Create a `webmushra` service user
 
 Importing SciPy into a WSGI script has proven to be tricky, so you need to change the `WSGIScriptAlias` line a bit:
 
-    WSGIDaemonProcess webmushra user=webmushra group=webmushra python-path=/path/to/venv/pymushra:/path/to/venv/lib/python2.7/site-packages
-    WSGIScriptAlias /webmushra /path/to/venv/pymushra/wsgi.py process-group=webmushra application-group=%{GLOBAL}
+    WSGIDaemonProcess webmushra user=webmushra group=webmushra python-path=/path/to/venv/pymushra/pymushra:/path/to/venv/env/lib/python3.6/site-packages home=/path/to/venv
 
-    <Location /webmushra>
+    Alias /webmushra/admin /path/to/venv/pymushra/pymushra/wsgi.py/admin
+    Alias /webmushra/collect /path/to/venv/pymushra/pymushra/wsgi.py/collect
+    Alias /webmushra/download /path/to/venv/pymushra/pymushra/wsgi.py/download
+    Alias /webmushra /path/to/venv/webmushra
+
+    <Directory /path/to/venv/pymushra/pymushra>
             WSGIProcessGroup webmushra
-    </Location>
-
-    <Directory /path/to/venv/pymushra>
+            WSGIApplicationGroup %{GLOBAL}
+            Require all granted
             WSGIScriptReloading On
-            <Files wsgi.py>
-                    Allow from all
-                    Require all granted
-            </Files>
+
+            Options ExecCGI
+            AddHandler wsgi-script .py
+    </Directory>
+
+    <Directory /path/to/venv/webmushra>
+            Require all granted
     </Directory>
 
 
