@@ -32,6 +32,11 @@ Importing SciPy into a WSGI script has proven to be tricky, so you need to chang
             Require all granted
     </Directory>
 
+#### Debugging
+
+See
+
+    tail -f /var/log/apache2/errors.log
 
 ### Nginx
 
@@ -95,3 +100,9 @@ Then create a `pymushra/uwsgi.ini` file
     chmod-socket = 666
 
     touch-reload = wsgi.py
+
+#### Debugging
+
+See
+
+    tail -f /path/to/venv/log/webmushra.log

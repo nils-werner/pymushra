@@ -7,30 +7,24 @@ Description
 pyMUSHRA is a python web application which hosts [webMUSHRA](https://github.com/audiolabs/webMUSHRA) experiments
 and collects the data with python.
 
-Installation
-------------
+Quick Start
+-----------
 
 This tool assumes to be run in a directory with the following structure:
 
     |- webmushra/  # The webmushra sources
     `- db/         # The TinyDB directory
 
+You can quickly create this and install pymushra using
 
-You may create this structure using
-
+    cd /path/to/venv
+    python3 -m venv .
     mkdir db
     git clone https://github.com/audiolabs/webMUSHRA.git webmushra
     git clone https://github.com/nils-werner/pymushra.git pymushra
 
     pip install -e pymushra
     pymushra server
-
-You may also override any of the paths, i.e.
-
-    pymushra -d somewhere/webmushra.json -w somewhere_else/webmushra/ server
-
-Please also inspect the options using `pymushra -h`.
-
 
 Debugging
 ---------
@@ -43,4 +37,10 @@ to load and inspect the TinyDB connection and
 
     pymushra df [collection]
 
-to import and expose a DataFrame from TinyDB to experiment with.
+to inspect the Pandas DataFrame export the TinyDB collection.
+
+Server Installation
+-------------------
+
+For a long-running pyMUSHRA installation, please do not use the builtin server but instead use a proper
+HTTP server, like Apache or Nginx. See [DEPLOYMENT.md](DEPLOYMENT.md) for installation instructions.
