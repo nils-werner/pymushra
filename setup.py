@@ -11,7 +11,7 @@ if __name__ == "__main__":
         author='Nils Werner, Fabian-Robert Stöter',
         author_email='nils.werner@audiolabs-erlangen.de',
 
-        license='proprietary',
+        license='MIT',
         packages=setuptools.find_packages(),
 
         install_requires=[
