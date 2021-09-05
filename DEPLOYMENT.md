@@ -74,7 +74,7 @@ Create a Systemd service file `/etc/systemd/system/webmushra.service`
     Description=uWSGI instance to serve pyMUSHRA
 
     [Service]
-    ExecStart=/bin/bash -c 'cd /path/to/venv/pymushra && source ../bin/activate && uwsgi --ini uwsgi.ini'
+    ExecStart=/path/to/venv/bin/uwsgi --ini /path/to/venv/uwsgi.ini'
     User=webmushra
     Group=webmushra
     Restart=on-failure
@@ -86,13 +86,12 @@ Create a Systemd service file `/etc/systemd/system/webmushra.service`
     [Install]
     WantedBy=multi-user.target
 
-and start it using `systemctl start webmushra.service`.
-
-Then create a `pymushra/uwsgi.ini` file
+Then create a `uwsgi.ini` file
 
     [uwsgi]
     mount = /webmushra=wsgi:application
     logto = log/%n.log
+    virtualenv = /path/to/venv
 
     manage-script-name = true
 
@@ -100,6 +99,8 @@ Then create a `pymushra/uwsgi.ini` file
     chmod-socket = 666
 
     touch-reload = wsgi.py
+
+and start the service using `systemctl start webmushra.service`.
 
 #### Debugging
 

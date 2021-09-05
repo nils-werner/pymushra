@@ -18,12 +18,13 @@ This tool assumes to be run in a directory with the following structure:
 You can quickly create this and install pymushra using
 
     cd /path/to/venv
+    python3 -m venv .
+    source bin/activate
+
     mkdir db
     git clone https://github.com/audiolabs/webMUSHRA.git webmushra
     git clone https://github.com/nils-werner/pymushra.git pymushra
 
-    python3 -m venv .
-    source bin/activate
     pip install -e pymushra
     pymushra server
 
