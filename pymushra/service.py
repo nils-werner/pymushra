@@ -101,9 +101,7 @@ def admin_list():
 @app.route('/admin/delete/<testid>/')
 @only_admin_allowlist
 def admin_delete(testid):
-    collection = app.config['db'].table(testid)
-    collection.drop()
-
+    app.config['db'].drop_table(testid)
     return redirect(url_for('admin_list'))
 
 
