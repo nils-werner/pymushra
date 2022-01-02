@@ -3,7 +3,7 @@ from __future__ import division, absolute_import, print_function
 import os
 import json
 import pickle
-from flask import Flask, request, jsonify, send_from_directory, send_file, \
+from flask import Flask, request, send_from_directory, send_file, \
     render_template, redirect, url_for, abort
 from tinyrecord import transaction
 from functools import wraps
@@ -52,15 +52,15 @@ def collect(testid=''):
                 inserted_ids = collection.insert_multiple(insert)
             print(inserted_ids)
 
-            return jsonify({
+            return {
                 'error': False,
                 'message': "Saved as ids %s" % ','.join(map(str, inserted_ids))
-            })
+            }
         except Exception as e:
-            return jsonify({
+            return {
                 'error': True,
                 'message': "An error occurred: %s" % str(e)
-            })
+            }
     else:
         return "415 Unsupported Media Type", 415
 
@@ -98,7 +98,7 @@ def admin_list():
     )
 
 
-@app.route('/admin/delete/<testid>')
+@app.route('/admin/delete/<testid>/')
 @only_admin_allowlist
 def admin_delete(testid):
     collection = app.config['db'].table(testid)
@@ -131,7 +131,7 @@ def admin_info(testid):
 def admin_latest(testid):
     collection = app.config['db'].table(testid)
     latest = sorted(collection.all(), key=lambda x: x['date'], reverse=True)[0]
-    return json.dumps(latest)
+    return latest
 
 
 @app.route('/admin/stats/<testid>/<stats_type>')
