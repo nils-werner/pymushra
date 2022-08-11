@@ -19,7 +19,7 @@ if __name__ == "__main__":
             'matplotlib>=2.0.0',
             'scipy',
             'ipython',
-            'flask',
+            'flask<2.0',
             'pandas>=0.24.0',
             'seaborn',
             'statsmodels',
