@@ -5,7 +5,7 @@ import setuptools
 if __name__ == "__main__":
     setuptools.setup(
         name='pymushra',
-        version='0.2',
+        version='0.3',
 
         description='webMUSHRA server in Python',
         author='Nils Werner, Fabian-Robert Stöter',
@@ -19,7 +19,7 @@ if __name__ == "__main__":
             'matplotlib>=2.0.0',
             'scipy',
             'ipython',
-            'flask<2.2.5',
+            'flask>=2.2.5',
             'pandas>=0.24.0',
             'seaborn',
             'statsmodels',

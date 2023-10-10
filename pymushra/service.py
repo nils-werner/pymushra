@@ -242,9 +242,9 @@ def download(testid, show_as, statstype=None, filetype='csv'):
     if as_attachment:
         return send_file(
             mem,
-            attachment_filename="%s.%s" % (testid, filetype),
+            download_name="%s.%s" % (testid, filetype),
             as_attachment=True,
-            cache_timeout=-1
+            max_age=-1
         )
     else:
         if filetype == "html":
