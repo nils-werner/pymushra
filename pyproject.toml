@@ -1,0 +1,38 @@
+[project]
+name = "pymushra"
+version = "0.3"
+description = "webMUSHRA server in Python"
+authors = [
+  {name = "Nils Werner", email = "nils.werner@audiolabs-erlangen.de"},
+  {name = "Fabian-Robert Stöter", email = "fabian-robert.stoeter@audiolabs-erlangen.de"},
+]
+license = "MIT"
+license-files = [ "LICENSE" ]
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+    "click",
+    "flask>=2.2.5",
+    "ipython",
+    "matplotlib>=2.0.0",
+    "numpy",
+    "pandas",
+    "patsy",
+    "scipy",
+    "seaborn",
+    "statsmodels",
+    "tinydb>=3.0.0",
+    "tinyrecord",
+]
+
+[project.scripts]
+pymushra = "pymushra.cli:cli"
+
+[dependency-groups]
+dev = [
+    "pytest",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

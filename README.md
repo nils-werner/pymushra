@@ -15,18 +15,10 @@ This tool assumes to be run in a directory with the following structure:
     |- webmushra/  # The webmushra sources
     `- db/         # The TinyDB directory
 
-You can quickly create this and install pymushra using
+You can quickly create this and run `pymushra` using `uv`
 
-    cd /path/to/venv
-    python3 -m venv .
-    source bin/activate
-
-    mkdir db
     git clone https://github.com/audiolabs/webMUSHRA.git webmushra
-    git clone https://github.com/nils-werner/pymushra.git pymushra
-
-    pip install -e pymushra
-    pymushra server
+    uvx pymushra server
 
 Then open <http://localhost:5000/admin/>
 
@@ -35,11 +27,11 @@ Debugging
 
 You may use the additional tools
 
-    pymushra db
+    uvx pymushra db
 
 to load and inspect the TinyDB connection and
 
-    pymushra df [collection]
+    uvx pymushra df [collection]
 
 to inspect the Pandas DataFrame export the TinyDB collection.
 
