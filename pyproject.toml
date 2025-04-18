@@ -1,6 +1,6 @@
 [project]
 name = "pymushra"
-version = "0.3"
+version = "0.4"
 description = "webMUSHRA server in Python"
 authors = [
   {name = "Nils Werner", email = "nils.werner@audiolabs-erlangen.de"},
