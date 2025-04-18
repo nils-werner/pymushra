@@ -10,15 +10,15 @@ and collects the data with python.
 Quick Start
 -----------
 
-This tool assumes to be run in a directory with the following structure:
+You can quickly spin up a pyMUSHRA server [using `uv`](https://docs.astral.sh/uv/guides/tools/) or [`pipx`](https://github.com/pypa/pipx):
 
-    |- webmushra/  # The webmushra sources
-    `- db/         # The TinyDB directory
+    uvx pymushra server -w <path/to/webmushra-sourcedir>
+    pipx run pymushra server -w <path/to/webmushra-sourcedir>
 
-You can quickly create this and run `pymushra` using `uv`
+or install in a project using
 
-    git clone https://github.com/audiolabs/webMUSHRA.git webmushra
-    uvx pymushra server
+    uv add pymushra
+    pip install pymushra
 
 Then open <http://localhost:5000/admin/>
 
