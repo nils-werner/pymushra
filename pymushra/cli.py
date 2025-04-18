@@ -27,14 +27,14 @@ def server(ctx, port, admin_allow):
 
     service.app.config['admin_allowlist'] = admin_allow
 
-    with TinyDB(ctx.obj['db_path']) as service.app.config['db']:
+    with TinyDB(ctx.obj['db_path'], create_dirs=True) as service.app.config['db']:
         service.app.run(debug=True, host='0.0.0.0', port=port)
 
 
 @cli.command()
 @click.pass_context
 def db(ctx):
-    with TinyDB(ctx.obj['db_path']) as db:
+    with TinyDB(ctx.obj['db_path'], create_dirs=True) as db:
         collections = db.tables()  # noqa: F841
 
         click.echo("""
@@ -53,7 +53,7 @@ collections : list
 @click.argument('collection_name')
 @click.pass_context
 def df(ctx, collection_name):
-    with TinyDB(ctx.obj['db_path']) as db:
+    with TinyDB(ctx.obj['db_path'], create_dirs=True) as db:
         collection = db.table(collection_name)
         df = casting.collection_to_df(collection)  # noqa: F841
 
