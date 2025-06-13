@@ -10,8 +10,11 @@ def escape_objects(df, columns=None):
 
     if columns is None:
         columns = [
-            ('questionaire', 'uuid'),
-            ('wm', 'id',),
+            ("questionaire", "uuid"),
+            (
+                "wm",
+                "id",
+            ),
         ]
 
     # Add flattened columns too, so we catch JSON and CSV column names
@@ -27,7 +30,7 @@ def escape_objects(df, columns=None):
 
 
 def collection_to_df(collection):
-    """ Transform TinyDB collection to DataFrame
+    """Transform TinyDB collection to DataFrame
 
     Parameters
     ----------
@@ -83,36 +86,33 @@ def collection_to_df(collection):
     dataset = []
 
     for trial in rawdata:
-        for response in trial['responses']:
+        for response in trial["responses"]:
             outitem = {}
 
             for key, item in response.items():
-                outitem[('responses', key)] = item
+                outitem[("responses", key)] = item
 
-            for key, item in trial['questionaire'].items():
-                outitem[('questionaire', key)] = item
+            for key, item in trial["questionaire"].items():
+                outitem[("questionaire", key)] = item
 
             for key, item in trial.items():
-                if key not in ('responses', 'questionaire'):
-                    outitem[('wm', key)] = item
+                if key not in ("responses", "questionaire"):
+                    outitem[("wm", key)] = item
 
-            outitem[('wm', 'id')] = str(outitem[('wm', 'id')])
+            outitem[("wm", "id")] = str(outitem[("wm", "id")])
             dataset.append(outitem)
 
     columns = list(set(itertools.chain(*map(lambda x: x.keys(), dataset))))
 
-    df = pd.DataFrame(
-        dataset,
-        columns=pd.MultiIndex.from_tuples(columns)
-    )
+    df = pd.DataFrame(dataset, columns=pd.MultiIndex.from_tuples(columns))
 
-    df[('wm', 'date')] = pd.to_datetime(df[('wm', 'date')])
+    df[("wm", "date")] = pd.to_datetime(df[("wm", "date")])
 
     return df
 
 
 def json_to_dict(payload):
-    """ Transform webMUSHRA JSON dict to sane structure
+    """Transform webMUSHRA JSON dict to sane structure
 
     Parameters
     ----------
@@ -148,20 +148,18 @@ def json_to_dict(payload):
     6. UUID4 field is added to questionaire
 
     """
-    questionaire = payload['participant']
-    questionaire = dict(
-        zip(questionaire['name'], questionaire['response'])
-    )
-    questionaire['uuid'] = str(uuid.uuid4())
+    questionaire = payload["participant"]
+    questionaire = dict(zip(questionaire["name"], questionaire["response"]))
+    questionaire["uuid"] = str(uuid.uuid4())
     insert = []
 
-    for trial in payload['trials']:
+    for trial in payload["trials"]:
         data = trial
 
-        data['config'] = payload['config']
-        data['testId'] = payload['testId']
-        data['date'] = str(datetime.datetime.now())
-        data['questionaire'] = questionaire
+        data["config"] = payload["config"]
+        data["testId"] = payload["testId"]
+        data["date"] = str(datetime.datetime.now())
+        data["questionaire"] = questionaire
 
         insert.append(data)
 
@@ -169,7 +167,7 @@ def json_to_dict(payload):
 
 
 def bool_or_fail(v):
-    """ A special variant of :code:`bool` that raises :code:`ValueError`s
+    """A special variant of :code:`bool` that raises :code:`ValueError`s
     if the provided value was not :code:`True` or :code:`False`.
 
     This prevents overeager casting like :code:`bool("bla") -> True`
@@ -186,9 +184,9 @@ def bool_or_fail(v):
 
     """
     try:
-        if v.lower() == 'true':
+        if v.lower() == "true":
             return True
-        elif v.lower() == 'false':
+        elif v.lower() == "false":
             return True
     except Exception:
         pass
@@ -196,7 +194,7 @@ def bool_or_fail(v):
 
 
 def cast_recursively(d, castto=None):
-    """ Traverse list or dict recursively, trying to cast their items.
+    """Traverse list or dict recursively, trying to cast their items.
 
     Parameters
     ----------
@@ -215,10 +213,7 @@ def cast_recursively(d, castto=None):
         castto = (bool_or_fail, int, float)
 
     if isinstance(d, dict):
-        return {
-            k: cast_recursively(v, castto=castto)
-            for k, v in d.items()
-        }
+        return {k: cast_recursively(v, castto=castto) for k, v in d.items()}
     elif isinstance(d, list):
         return [cast_recursively(v, castto=castto) for v in d]
     else:
