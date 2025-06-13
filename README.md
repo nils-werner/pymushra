@@ -15,10 +15,18 @@ You can quickly spin up a pyMUSHRA server [using `uv`](https://docs.astral.sh/uv
     uvx pymushra server -w <path/to/webmushra-sourcedir>
     pipx run pymushra server -w <path/to/webmushra-sourcedir>
 
-or install in a project using
+Installation
+------------
+
+You can install pyMUSHRA in a project using
 
     uv add pymushra
+    uv run pymushra server
+
+or
+
     pip install pymushra
+    pymushra server
 
 Then open <http://localhost:5000/admin/>
 
