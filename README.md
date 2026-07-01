@@ -12,8 +12,8 @@ Quick Start
 
 You can quickly spin up a pyMUSHRA server [using `uv`](https://docs.astral.sh/uv/guides/tools/) or [`pipx`](https://github.com/pypa/pipx):
 
-    uvx pymushra server -w <path/to/webmushra-sourcedir>
-    pipx run pymushra server -w <path/to/webmushra-sourcedir>
+    uvx pymushra -w <path/to/webmushra-sourcedir> server
+    pipx run pymushra -w <path/to/webmushra-sourcedir> server
 
 Installation
 ------------
