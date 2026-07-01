@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 import json
 import os
 import pickle
+from datetime import datetime
 from functools import wraps
 from io import BytesIO, StringIO
 
@@ -236,5 +237,5 @@ def utility_processor():
 
 
 @app.template_filter("datetime")
-def datetime_filter(value, format="%x %X"):
+def datetime_filter(value: datetime, format="%x %X") -> str:
     return value.strftime(format)

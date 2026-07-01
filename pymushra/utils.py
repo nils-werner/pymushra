@@ -1,15 +1,15 @@
 import fnmatch
 import os
 from io import BytesIO, StringIO
+from typing import List
 
 
-
-def get_configs(path):
+def get_configs(path) -> List[str]:
     """Retrieves all config files from webMUSHRA config directory"""
     return [file for file in os.listdir(path) if fnmatch.fnmatch(file, "*.yaml")]
 
 
-def flatten_columns(columns):
+def flatten_columns(columns) -> List[str]:
     """Transforms hierarchical column names to concatenated single-level
     columns
 

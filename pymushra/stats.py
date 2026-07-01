@@ -1,6 +1,7 @@
 import base64
 from io import BytesIO
 from urllib.parse import quote
+from uuid import UUID
 
 import matplotlib as mpl
 import pandas as pd
@@ -15,7 +16,7 @@ from matplotlib.figure import Figure
 from statsmodels.formula.api import ols
 
 
-def significance_class(p, alpha=0.05):
+def significance_class(p: float, alpha: float = 0.05) -> int:
     if p < 0.0001:
         return 4
     elif p < 0.001:
@@ -28,11 +29,11 @@ def significance_class(p, alpha=0.05):
         return 0
 
 
-def significance_stars(p, alpha=0.05):
+def significance_stars(p: float, alpha: float = 0.05) -> str:
     return "".join(["*"] * significance_class(p, alpha))
 
 
-def detect_outliers(df: pd.DataFrame, method=None) -> pd.DataFrame:
+def detect_outliers(df: pd.DataFrame, method: str | None = None) -> pd.DataFrame:
     if method is None:
         # add simple median based outlier detection here
         return df
@@ -57,7 +58,7 @@ def detect_outliers(df: pd.DataFrame, method=None) -> pd.DataFrame:
         return df
 
 
-def render_mushra(testid, df):
+def render_mushra(testid: UUID, df: pd.DataFrame) -> str:
     if len(df) == 0:
         raise ValueError("Dataset was empty")
 
@@ -118,7 +119,7 @@ def render_mushra(testid, df):
     )
 
 
-def render_boxplot(testid, df):
+def render_boxplot(testid: UUID, df: pd.DataFrame) -> str:
     fig = Figure(facecolor=(0, 0, 0, 0))
     ax = fig.add_subplot(111)
 
