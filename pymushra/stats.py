@@ -143,13 +143,14 @@ def render_boxplot(testid, df):
     })
 
     sns.boxplot(
-        df[('responses_stimulus')],
-        df[('responses_score')],
+        df,
+        x="responses_stimulus",
+        y="responses_score",
         ax=ax,
     )
 
     ax.get_yaxis().set_minor_locator(mpl.ticker.AutoMinorLocator())
-    ax.grid(b=True, which='minor', color='0.8', linewidth=0.5)
+    ax.grid(visible=True, which='minor', color='0.8', linewidth=0.5)
     ax.set_ylim([0, 101])
 
     sns.despine(left=True, ax=ax, trim=False)
