@@ -143,8 +143,7 @@ def render_boxplot(testid, df):
     })
 
     sns.boxplot(
-        {"responses_stimulus": df[('responses_stimulus')],
-         "responses_score": df[('responses_score')]},
+        df,
         x="responses_stimulus",
         y="responses_score",
         ax=ax,
