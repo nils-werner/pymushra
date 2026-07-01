@@ -223,7 +223,7 @@ def download(testid, show_as, statstype=None, filetype="csv"):
         if filetype == "html":
             return render_template("admin/table.html", table=mem.getvalue())
         else:
-            return send_file(mem, mimetype="text/plain", cache_timeout=-1)
+            return send_file(mem, mimetype="text/plain", max_age=-1)
 
 
 @app.context_processor
