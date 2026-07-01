@@ -1,7 +1,9 @@
-import pandas as pd
-import uuid
-import itertools
 import datetime
+import itertools
+import uuid
+
+import pandas as pd
+
 from . import utils
 
 

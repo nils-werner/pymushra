@@ -1,5 +1,7 @@
 import os.path
+
 from tinydb import TinyDB
+
 from pymushra.service import app as application
 
 application.config["admin_allowlist"] = ["127.0.0.1"]

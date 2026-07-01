@@ -1,5 +1,6 @@
 import base64
 from io import BytesIO
+from urllib.parse import quote
 
 import matplotlib as mpl
 import scipy
@@ -11,11 +12,6 @@ from flask import render_template
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 from statsmodels.formula.api import ols
-
-try:
-    from urllib import quote
-except ImportError:
-    from urllib.parse import quote
 
 
 def significance_class(p, alpha=0.05):

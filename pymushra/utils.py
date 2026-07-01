@@ -1,5 +1,5 @@
-import os
 import fnmatch
+import os
 
 
 def get_configs(path):

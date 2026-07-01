@@ -1,8 +1,10 @@
 import os
+
 import click
 import IPython
 from tinydb import TinyDB
-from . import service, casting
+
+from . import casting, service
 
 
 @click.group()

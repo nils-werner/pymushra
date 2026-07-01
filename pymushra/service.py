@@ -1,29 +1,24 @@
-from __future__ import division, absolute_import, print_function
+from __future__ import absolute_import, division, print_function
 
-import os
 import json
+import os
 import pickle
+from functools import wraps
+from io import BytesIO, StringIO
+
 from flask import (
     Flask,
-    request,
-    send_from_directory,
-    send_file,
-    render_template,
-    redirect,
-    url_for,
     abort,
+    redirect,
+    render_template,
+    request,
+    send_file,
+    send_from_directory,
+    url_for,
 )
 from tinyrecord import transaction
-from functools import wraps
 
-from . import stats, casting, utils
-
-from io import BytesIO
-
-try:
-    from io import StringIO
-except ImportError:
-    from StringIO import StringIO
+from . import casting, stats, utils
 
 app = Flask(__name__)
 
