@@ -25,12 +25,20 @@ dependencies = [
     "tinyrecord",
 ]
 
+[tool.pyrefly]
+project-includes = [
+    "**/*.py*",
+    "**/*.ipynb",
+]
+
 [project.scripts]
 pymushra = "pymushra.cli:cli"
 
 [dependency-groups]
 dev = [
+    "pyrefly>=1.1.1",
     "pytest",
+    "ruff>=0.15.20",
 ]
 
 [build-system]
