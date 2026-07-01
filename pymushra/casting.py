@@ -7,7 +7,7 @@ import pandas as pd
 from . import utils
 
 
-def escape_objects(df, columns=None):
+def escape_objects(df: pd.DataFrame, columns=None) -> pd.DataFrame:
     df = df.copy()
 
     if columns is None:

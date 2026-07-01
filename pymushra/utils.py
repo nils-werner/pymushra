@@ -1,5 +1,7 @@
 import fnmatch
 import os
+from io import BytesIO, StringIO
+
 
 
 def get_configs(path):
@@ -13,3 +15,13 @@ def flatten_columns(columns):
 
     """
     return ["_".join(col).strip() for col in columns]
+
+
+def to_bytesio(data: BytesIO | StringIO) -> BytesIO:
+    if isinstance(data, BytesIO):
+        return data
+
+    out = BytesIO()
+    out.write(data.getvalue().encode("utf-8"))
+    out.seek(0)
+    return out

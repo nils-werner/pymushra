@@ -18,6 +18,8 @@ from flask import (
 )
 from tinyrecord import transaction
 
+from pymushra.utils import to_bytesio
+
 from . import casting, stats, utils
 
 app = Flask(__name__)
@@ -203,18 +205,14 @@ def download(testid, show_as, statstype=None, filetype="csv"):
         mem = StringIO()
         # We need to escape certain objects in the DF to prevent Segfaults
         casting.escape_objects(df).to_json(mem, orient="records")
+    else:
+        raise ValueError(f"Incorrect filetype {filetype}")
 
     mem.seek(0)
 
-    if (as_attachment or filetype != "html") and not isinstance(mem, BytesIO):
-        mem2 = BytesIO()
-        mem2.write(mem.getvalue().encode("utf-8"))
-        mem2.seek(0)
-        mem = mem2
-
     if as_attachment:
         return send_file(
-            mem,
+            to_bytesio(mem),
             download_name="%s.%s" % (testid, filetype),
             as_attachment=True,
             max_age=-1,
@@ -223,7 +221,7 @@ def download(testid, show_as, statstype=None, filetype="csv"):
         if filetype == "html":
             return render_template("admin/table.html", table=mem.getvalue())
         else:
-            return send_file(mem, mimetype="text/plain", max_age=-1)
+            return send_file(to_bytesio(mem), mimetype="text/plain", max_age=-1)
 
 
 @app.context_processor

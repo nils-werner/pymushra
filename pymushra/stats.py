@@ -3,6 +3,7 @@ from io import BytesIO
 from urllib.parse import quote
 
 import matplotlib as mpl
+import pandas as pd
 import scipy
 import seaborn as sns
 import statsmodels.stats.anova
@@ -31,10 +32,10 @@ def significance_stars(p, alpha=0.05):
     return "".join(["*"] * significance_class(p, alpha))
 
 
-def detect_outliers(df, method=None):
+def detect_outliers(df: pd.DataFrame, method=None) -> pd.DataFrame:
     if method is None:
         # add simple median based outlier detection here
-        pass
+        return df
     elif method == "mushra":
         # get 'bad' responses according to mushra rec
         bad_responses = df[
@@ -143,7 +144,7 @@ def render_boxplot(testid, df):
 
     ax.get_yaxis().set_minor_locator(mpl.ticker.AutoMinorLocator())
     ax.grid(visible=True, which="minor", color="0.8", linewidth=0.5)
-    ax.set_ylim([0, 101])
+    ax.set_ylim((0, 101))
 
     sns.despine(left=True, ax=ax, trim=False)
 
