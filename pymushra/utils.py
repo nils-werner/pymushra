@@ -1,10 +1,11 @@
 import fnmatch
 import os
 from io import BytesIO, StringIO
+from os import PathLike
 from typing import List
 
 
-def get_configs(path) -> List[str]:
+def get_configs(path: str | PathLike[str]) -> List[str]:
     """Retrieves all config files from webMUSHRA config directory"""
     return [file for file in os.listdir(path) if fnmatch.fnmatch(file, "*.yaml")]
 

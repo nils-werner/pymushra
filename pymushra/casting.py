@@ -1,6 +1,7 @@
 import datetime
 import itertools
 import uuid
+from typing import Any, Callable, Dict, List
 
 import pandas as pd
 
@@ -195,7 +196,7 @@ def bool_or_fail(v) -> bool:
     raise ValueError()
 
 
-def cast_recursively(d, castto=None):
+def cast_recursively(d, castto: List[Callable[[Any], Any]] | None = None) -> Any:
     """Traverse list or dict recursively, trying to cast their items.
 
     Parameters
@@ -212,7 +213,7 @@ def cast_recursively(d, castto=None):
 
     """
     if castto is None:
-        castto = (bool_or_fail, int, float)
+        castto = [bool_or_fail, int, float]
 
     if isinstance(d, dict):
         return {k: cast_recursively(v, castto=castto) for k, v in d.items()}
