@@ -168,7 +168,7 @@ def json_to_dict(payload) -> List[Dict[str, str]]:
     return insert
 
 
-def bool_or_fail(v):
+def bool_or_fail(v) -> bool:
     """A special variant of :code:`bool` that raises :code:`ValueError`s
     if the provided value was not :code:`True` or :code:`False`.
 
@@ -189,7 +189,7 @@ def bool_or_fail(v):
         if v.lower() == "true":
             return True
         elif v.lower() == "false":
-            return True
+            return False
     except Exception:
         pass
     raise ValueError()
