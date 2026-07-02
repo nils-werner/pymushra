@@ -6,7 +6,7 @@
     <p>
         <em>Numer of participants:</em> {{ n_post }} ({{ n_pre - n_post }} outliers removed)
     </p>
-    <img src = "{{ boxplot_uri }}"/>
+    <img src = "{{ url_for('admin_plot', testid=url, plot_type='boxplot') }}"/>
     <h2>Preconditions</h2>
     <p>
         <h3>Test of normality (KS):</h3>
