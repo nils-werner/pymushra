@@ -14,10 +14,7 @@ def escape_objects(df: pd.DataFrame, columns=None) -> pd.DataFrame:
     if columns is None:
         columns = [
             ("questionaire", "uuid"),
-            (
-                "wm",
-                "id",
-            ),
+            ("wm", "id"),
         ]
 
     # Add flattened columns too, so we catch JSON and CSV column names
