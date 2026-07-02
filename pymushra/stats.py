@@ -1,6 +1,5 @@
-import base64
 from io import BytesIO
-from urllib.parse import quote
+from typing import Tuple
 from uuid import UUID
 
 import matplotlib as mpl
@@ -58,10 +57,7 @@ def detect_outliers(df: pd.DataFrame, method: str | None = None) -> pd.DataFrame
         return df
 
 
-def render_mushra(testid: UUID, df: pd.DataFrame) -> str:
-    if len(df) == 0:
-        raise ValueError("Dataset was empty")
-
+def mushra_preprocess(df: pd.DataFrame) -> Tuple[int, int, pd.DataFrame]:
     df = df[df["wm_type"] == "mushra"]
 
     # counting participants
@@ -75,7 +71,14 @@ def render_mushra(testid: UUID, df: pd.DataFrame) -> str:
     # Filter Dataframe to only get the systems under test
     disallowed_conditions = ["reference", "anchor35", "anchor70"]
     # all conditions NOT in allowed conditions
-    df_dut = df[~df[("responses_stimulus")].isin(disallowed_conditions)]
+    return n_pre, n_post, df[~df[("responses_stimulus")].isin(disallowed_conditions)]
+
+
+def render_mushra(testid: UUID, df: pd.DataFrame) -> str:
+    if len(df) == 0:
+        raise ValueError("Dataset was empty")
+
+    n_pre, n_post, df_dut = mushra_preprocess(df)
 
     # Kolmogorov Smirnov Test for normality
     ks_ps = {}
@@ -119,7 +122,9 @@ def render_mushra(testid: UUID, df: pd.DataFrame) -> str:
     )
 
 
-def render_boxplot(testid: UUID, df: pd.DataFrame) -> str:
+def render_boxplot(testid: UUID, df: pd.DataFrame) -> BytesIO:
+    _, _, df = mushra_preprocess(df)
+
     fig = Figure(facecolor=(0, 0, 0, 0))
     ax = fig.add_subplot(111)
 
@@ -153,8 +158,6 @@ def render_boxplot(testid: UUID, df: pd.DataFrame) -> str:
 
     png_output = BytesIO()
     canvas.print_png(png_output)
-
     png_output.seek(0)  # rewind the data
 
-    uri = "data:image/png;base64," + quote(base64.b64encode(png_output.getbuffer()))
-    return uri
+    return png_output

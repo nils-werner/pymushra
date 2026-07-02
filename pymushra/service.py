@@ -143,6 +143,18 @@ def admin_stats(testid, stats_type="mushra"):
     return render_template("error/404.html"), 404
 
 
+@app.route("/admin/plot/<testid>/<plot_type>.png")
+@only_admin_allowlist
+def admin_plot(testid, plot_type="boxplot"):
+    collection = app.config["db"].table(testid)
+    df = casting.collection_to_df(collection)
+    df.columns = utils.flatten_columns(df.columns)
+
+    if plot_type == "boxplot":
+        return send_file(stats.render_boxplot(testid, df), mimetype="image/png")
+    return render_template("error/404.html"), 404
+
+
 @app.route("/admin/download/<testid>.<filetype>", defaults={"show_as": "download"})
 @app.route(
     "/admin/download/<testid>/<statstype>.<filetype>", defaults={"show_as": "download"}
