@@ -4,7 +4,7 @@ import json
 import os
 import pickle
 from datetime import datetime
-from functools import wraps
+from functools import partial, wraps
 from io import BytesIO, StringIO
 
 from flask import (
@@ -19,6 +19,7 @@ from flask import (
 )
 from tinyrecord import transaction
 
+from pymushra.stats import significance_stars
 from pymushra.utils import to_bytesio
 
 from . import casting, stats, utils
@@ -227,13 +228,12 @@ def download(testid, show_as, statstype=None, filetype="csv"):
 
 @app.context_processor
 def utility_processor():
-    def significance_stars(p, alpha=0.05):
-        return "".join(
-            ['<span class="glyphicon glyphicon-star small"aria-hidden="true"></span>']
-            * stats.significance_class(p, alpha)
+    return dict(
+        significance_stars=partial(
+            significance_stars,
+            star='<span class="glyphicon glyphicon-star small"aria-hidden="true"></span>',
         )
-
-    return dict(significance_stars=significance_stars)
+    )
 
 
 @app.template_filter("datetime")

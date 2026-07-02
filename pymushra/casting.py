@@ -1,6 +1,7 @@
 import datetime
 import itertools
 import uuid
+from typing import Any, Callable, Dict, List
 
 import pandas as pd
 
@@ -13,10 +14,7 @@ def escape_objects(df: pd.DataFrame, columns=None) -> pd.DataFrame:
     if columns is None:
         columns = [
             ("questionaire", "uuid"),
-            (
-                "wm",
-                "id",
-            ),
+            ("wm", "id"),
         ]
 
     # Add flattened columns too, so we catch JSON and CSV column names
@@ -113,7 +111,7 @@ def collection_to_df(collection):
     return df
 
 
-def json_to_dict(payload):
+def json_to_dict(payload) -> List[Dict[str, str]]:
     """Transform webMUSHRA JSON dict to sane structure
 
     Parameters
@@ -168,7 +166,7 @@ def json_to_dict(payload):
     return insert
 
 
-def bool_or_fail(v):
+def bool_or_fail(v) -> bool:
     """A special variant of :code:`bool` that raises :code:`ValueError`s
     if the provided value was not :code:`True` or :code:`False`.
 
@@ -189,13 +187,13 @@ def bool_or_fail(v):
         if v.lower() == "true":
             return True
         elif v.lower() == "false":
-            return True
+            return False
     except Exception:
         pass
     raise ValueError()
 
 
-def cast_recursively(d, castto=None):
+def cast_recursively(d, castto: List[Callable[[Any], Any]] | None = None) -> Any:
     """Traverse list or dict recursively, trying to cast their items.
 
     Parameters
@@ -212,7 +210,7 @@ def cast_recursively(d, castto=None):
 
     """
     if castto is None:
-        castto = (bool_or_fail, int, float)
+        castto = [bool_or_fail, int, float]
 
     if isinstance(d, dict):
         return {k: cast_recursively(v, castto=castto) for k, v in d.items()}

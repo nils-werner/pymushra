@@ -29,8 +29,8 @@ def significance_class(p: float, alpha: float = 0.05) -> int:
         return 0
 
 
-def significance_stars(p: float, alpha: float = 0.05) -> str:
-    return "".join(["*"] * significance_class(p, alpha))
+def significance_stars(p: float, alpha: float = 0.05, star: str = "*") -> str:
+    return "".join([star] * significance_class(p, alpha))
 
 
 def detect_outliers(df: pd.DataFrame, method: str | None = None) -> pd.DataFrame:
