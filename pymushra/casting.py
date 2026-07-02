@@ -113,7 +113,7 @@ def collection_to_df(collection):
     return df
 
 
-def json_to_dict(payload):
+def json_to_dict(payload) -> List[Dict[str, str]]:
     """Transform webMUSHRA JSON dict to sane structure
 
     Parameters
