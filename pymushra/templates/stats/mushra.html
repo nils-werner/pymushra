@@ -4,17 +4,17 @@
     <h1>{{ url }}</h1>
 
     <p>
-        <em>Numer of participants:</em> {{ n_post }} ({{ n_pre - n_post }} outliers removed)
+        <em>Numer of participants:</em> N={{ n_pre }}, n={{ n_post }} ({{ n_pre - n_post }} outliers removed)
     </p>
     <img src = "{{ boxplot_uri }}"/>
     <h2>Preconditions</h2>
     <p>
         <h3>Test of normality (KS):</h3>
             {% for stimulus, p in ks.items() %}
-                <b>Condition {{ stimulus }}:</b> p = {{ p }} {{ significance_stars(p) | safe }}</br>
+                <b>Condition {{ stimulus }}:</b> p = <span title="{{ p }}">{{ p | p_val_format }}</span> {{ significance_stars(p) | safe }}</br>
             {% endfor %}
         <h3>Test of equal variances:</h3>
-            <b>Levene test</b>: p = {{ lev_p }} {{ significance_stars(lev_p) | safe }}
+            <b>Levene test</b>: p = <span title="{{ lev_p }}">{{ lev_p | p_val_format }}</span> {{ significance_stars(lev_p) | safe }}
     <h2>ANOVA</h2>
     <p>
         <pre>{{ aov }}</pre>

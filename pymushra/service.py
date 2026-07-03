@@ -19,7 +19,7 @@ from flask import (
 )
 from tinyrecord import transaction
 
-from pymushra.stats import significance_stars
+from pymushra.stats import p_val_format, significance_stars
 from pymushra.utils import to_bytesio
 
 from . import casting, stats, utils
@@ -239,3 +239,8 @@ def utility_processor():
 @app.template_filter("datetime")
 def datetime_filter(value: datetime, format="%x %X") -> str:
     return value.strftime(format)
+
+
+@app.template_filter("p_val_format")
+def p_val_format_filter(value: float) -> str:
+    return p_val_format(value)

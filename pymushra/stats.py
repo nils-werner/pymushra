@@ -16,6 +16,13 @@ from matplotlib.figure import Figure
 from statsmodels.formula.api import ols
 
 
+def p_val_format(p: float) -> str:
+    if p < 0.0001:
+        return "< 0.0001"
+    else:
+        return f"{p:.5}"
+
+
 def significance_class(p: float, alpha: float = 0.05) -> int:
     if p < 0.0001:
         return 4
