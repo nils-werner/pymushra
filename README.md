@@ -10,23 +10,34 @@ and collects the data with python.
 Quick Start
 -----------
 
-You can quickly spin up a pyMUSHRA server [using `uv`](https://docs.astral.sh/uv/guides/tools/) or [`pipx`](https://github.com/pypa/pipx):
+You can quickly spin up a pyMUSHRA server [using `uvx`](https://docs.astral.sh/uv/guides/tools/) or [`pipx`](https://github.com/pypa/pipx):
 
-    uvx pymushra -w <path/to/webmushra-sourcedir> server
-    pipx run pymushra -w <path/to/webmushra-sourcedir> server
+```sh
+uvx pymushra -w <path/to/webmushra-sourcedir> server
+```
+
+or
+
+```sh
+pipx run pymushra -w <path/to/webmushra-sourcedir> server
+```
 
 Installation
 ------------
 
-You can install pyMUSHRA in a project using
+You can also install pyMUSHRA in a project using
 
-    uv add pymushra
-    uv run pymushra server
+```sh
+uv add pymushra
+uv run pymushra server
+```
 
 or
 
-    pip install pymushra
-    pymushra server
+```sh
+pip install pymushra
+pymushra server
+```
 
 Then open <http://localhost:5000/admin/>
 
@@ -35,11 +46,15 @@ Debugging
 
 You may use the additional tools
 
-    uvx pymushra db
+```sh
+uvx pymushra db
+```
 
 to load and inspect the TinyDB connection and
 
-    uvx pymushra df [collection]
+```sh
+uvx pymushra df [collection]
+```
 
 to inspect the Pandas DataFrame export the TinyDB collection.
 
