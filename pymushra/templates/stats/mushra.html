@@ -4,7 +4,9 @@
     <h1>{{ url }}</h1>
 
     <p>
-        <em>Numer of participants:</em> N={{ n_pre }}, n={{ n_post }} ({{ n_pre - n_post }} outliers removed)
+        N={{ n_pre }} Total participants <br />
+        n={{ n_pre - n_post }} Participants removed in <a href="https://en.wikipedia.org/wiki/MUSHRA#Pre-_or_post-screening">pre-screening</a> <br />
+        n={{ n_post }} Participants included <br />
     </p>
     <img src = "{{ boxplot_uri }}"/>
     <h2>Preconditions</h2>
